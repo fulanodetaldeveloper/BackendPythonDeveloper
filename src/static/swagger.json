@@ -1,0 +1,315 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "API REST Academia de Magia",
+        "version": "1.0"
+    },
+    "basePath": "/",
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/solicitud": {
+            "post": {
+                "summary": "Agregar una nueva solicitud",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": True,
+                        "schema": {
+                            "$ref": "#/definitions/request_solicitud"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Solicitud creada exitosamente",
+                        "schema": {
+                            "$ref": "#/definitions/response_solicitud_add"
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud inválida"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Obtener todas las solicitudes",
+                "responses": {
+                    "200": {
+                        "description": "Lista de solicitudes registradas en la bd",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/response_solicitud_list"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/asignaciones": {
+            "get": {
+                "summary": "Obtener todas las asignaciones de grimorios",
+                "responses": {
+                    "200": {
+                        "description": "Lista de solicitudes con grimorio asignado en la bd",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/grimorios"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/solicitud/{id}": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "id",
+                    "type": "integer",
+                    "required": True
+                }
+            ],
+            "put": {
+                "summary": "Actualizar los datos de una solicitud",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": True,
+                        "schema": {
+                            "$ref": "#/definitions/request_solicitud"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Solicitud actualizada correctamente",
+                        "schema": {
+                            "$ref": "#/definitions/response_solicitud_add"
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud inválida"
+                    },
+                    "404": {
+                        "description": "Solicitud no encontrada"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Eliminar una solicitud por ID",
+                "responses": {
+                    "200": {
+                        "description": "Solicitud eliminada"
+                    },
+                    "404": {
+                        "description": "Solicitud no encontrada"
+                    }
+                }
+            }
+        },
+        "/solicitud/{id}/estatus": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "id",
+                    "type": "integer",
+                    "required": True
+                }
+            ],
+            "patch": {
+                "summary": "Actualizar el estatus de una solicitud",
+                "responses": {
+                    "200": {
+                        "description": "Solicitud actualizada correctamente",
+                        "schema": {
+                            "$ref": "#/definitions/request_solicitud"
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud inválida"
+                    },
+                    "404": {
+                        "description": "Solicitud no encontrada"
+                    }
+                }
+            },
+            "/asignaciones": {
+                "get": {
+                    "summary": "Obtener todas las asignaciones de grimorios",
+                    "responses": {
+                        "200": {
+                            "description": "Lista de solicitudes con grimorio asignado en la bd",
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/grimorios"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "request_solicitud": {
+            "type": "object",
+            "properties": {
+                "nombre": {
+                    "type": "string"
+                },
+                "apellido": {
+                    "type": "string"
+                },
+                "identificacion": {
+                    "type": "string"
+                },
+                "edad": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "id_afinidad_magica": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
+        "response_solicitud_add": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "nombre": {
+                    "type": "string"
+                },
+                "apellido": {
+                    "type": "string"
+                },
+                "identificacion": {
+                    "type": "string"
+                },
+                "edad": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "id_afinidad_magica": {
+                    "type": "object",
+                    "properties": {
+                        "afinidad": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                }
+            }
+        },
+        "grimorios": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "nombre": {
+                    "type": "string"
+                },
+                "apellido": {
+                    "type": "string"
+                },
+                "identificacion": {
+                    "type": "string"
+                },
+                "edad": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "afinidad_magica": {
+                    "type": "string",
+                },
+                "grimorio_asignado": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "grimorio_numero_de_trevoles": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "grimorio_clasificacion": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
+        "response_solicitud_list": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "nombre": {
+                    "type": "string"
+                },
+                "apellido": {
+                    "type": "string"
+                },
+                "identificacion": {
+                    "type": "string"
+                },
+                "edad": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "id_afinidad_magica": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "id_grimorio": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "grimorio": {
+                    "type": "object",
+                    "properties": {
+                        "id_grimorio": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "id_clasificacion": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "numero_de_trevoles": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "clasificacion": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                },
+                                "clasificacion": {
+                                    "type": "integer",
+                                    "format": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
